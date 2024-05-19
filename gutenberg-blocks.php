@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       Gutenberg Blocks
- * Description:       Example block written with ESNext standard and JSX support – build step required.
+ * Description:       Example Gutenberg blocks written with ESNext standard and JSX support – build step required.
  * Requires at least: 5.8
- * Requires PHP:      7.0
+ * Requires PHP:      7.4
  * Version:           0.1.0
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later

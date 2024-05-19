@@ -1,6 +1,7 @@
-=== Gutenberg Blocks ===
+# Gutenberg Blocks
 
-Contributors:      Adriana Hernández Regueiro
+Contributors:      Adriana Hernández
+
 Tags:              gutenberg, block, wordpress, plugin
 Tested up to:      6.5.3
 Stable tag:        0.1.0
@@ -9,11 +10,11 @@ License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
 Simple WordPress plugin with a group of custom Gutenberg blocks written with Javascript and JSX support – build step required.
 
-== Description ==
+## Description
 
 Group of reusable Gutenberg blocks to use on any project.
 
-== Installation ==
+## Installation
 
 1. Upload the plugin files to the `/wp-content/plugins/gutenberg-blocks` directory.
 2. Activate the plugin through the 'Plugins' screen in WordPress
@@ -25,11 +26,11 @@ Group of reusable Gutenberg blocks to use on any project.
    ```
 4. Enjoy!
 
-== Contributing
+## Contributing
 
 You are welcome to contribute with this project. You can create a fork and send PR or open issues in https://github.com/adrianahdez/gutenberg-blocks
 
-== Changelog ==
+## Changelog
 
-= 0.1.0 =
-* Release
+* 0.1.0
+  * Release
