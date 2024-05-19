@@ -1,0 +1,83 @@
+@use '../../../scss/helpers' as *;
+@use '../../../scss/components/custom-blocks';
+@use '../../../scss/components/pagination';
+@use '../../../scss/components/editor-gallery';
+@use '../../../scss/components/modal';
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * This block uses the same styles we've set for the native latest posts block. 
+ * @see /assets/src/scss/layout/block-latest-posts.scss
+ */
+
+.wp-block-gutenberg-blocks-paginated-posts {
+	max-width: unset !important;
+
+	.single-post-container {
+		background-color: var(--wp--preset--color--white, #fff);
+
+		&--empty {
+			border-left: solid 2px var(--wp--preset--color--yellow, #FFD700);
+		}
+
+		@include respond-at($medium) {
+			flex-direction: row;
+		}
+	}
+}
+
+.gallery-slider {
+	position: relative;
+
+	.wp-block-button__link {
+		justify-content: flex-end!important;
+	}
+
+	.slide-background {
+		height: 504px;
+		max-height: calc(100vh - 196px - 184px);
+		width: 100%;
+		object-fit: cover;
+
+		@include respond-at($fhd) {
+			height: 904px;
+			max-height: calc(100vh - 196px - 184px);
+		}
+	}
+
+	.swiper-next,
+	.swiper-prev {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 1;
+		width: fit-content;
+		background-color: transparent;
+		color: var(--wp--preset--color--white, #fff);
+		cursor: pointer;
+
+		svg {
+			rect {
+				&:first-child {
+					fill: #00000066;
+				}
+
+				&:last-child {
+					fill: var(--wp--preset--color--white, #fff);
+				}
+			}
+			path {
+				stroke: var(--wp--preset--color--white, #fff);
+			}
+		}
+	}
+
+	.swiper-next {
+		right: rem(24);
+	}
+
+	.swiper-prev {
+		left: rem(24);
+	}
+}

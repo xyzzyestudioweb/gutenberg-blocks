@@ -1,0 +1,225 @@
+import { useEffect, useState, useRef } from "react";
+import { __ } from "@wordpress/i18n";
+import Pagination from "./Pagination";
+import Skeleton from "./Skeleton";
+import InitModals from "../../Services/InitModals";
+import { waitForElement } from "../../Services/CommonBlockFunctions";
+
+export default function Component({ attributes, is_edit_mode, blockProps }) {
+  const { cpt, perPage, className } = attributes;
+
+  const [response, setResponse] = useState(null);
+  const [pageNum, setPageNum] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const scrollToRef = useRef();
+  const [isCustomCptStyle, setIsCustomCptStyle] = useState(false);
+  const [isModalsInitialized, setIsModalsInitialized] = useState(false);
+
+  const useEffectProps = is_edit_mode ? [cpt, perPage] : [pageNum];
+  useEffect(() => {
+    const timeoutId = setTimeout(() => fetchData(), 300);
+    return () => clearTimeout(timeoutId);
+  }, useEffectProps)
+
+  useEffect(() => {
+    if (response?.posts?.length && isCustomCptStyle) InitModals(response?.posts);
+    setIsModalsInitialized(true);
+  }, [response]);
+
+  useEffect(() => {
+    if (isModalsInitialized && !is_edit_mode) InitSlider();
+  }, [isModalsInitialized]);
+
+
+  useEffect(() => {
+    if (!is_edit_mode && className === 'is-style-custom-cpt') {
+      setIsCustomCptStyle(true);
+    }
+
+    if (is_edit_mode && blockProps.className?.includes('is-style-custom-cpt')) {
+      setIsCustomCptStyle(true);
+    }
+  }, [className]);
+
+  const InitSlider = () => {
+
+    const initSwiper = (slider) => {
+      const numberOfSlides = slider.querySelectorAll(".swiper-slide").length;
+      const parent = slider.parentElement;
+      new Swiper(slider, {
+        centeredSlides: true,
+        grabCursor: true,
+        autoplay: false,
+        loop: numberOfSlides > 1,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: parent.querySelector(".swiper-next"),
+          prevEl: parent.querySelector(".swiper-prev"),
+        },
+      });
+    };
+
+    waitForElement('.gallerySwiper').then((slider) => {
+      initSwiper(slider);
+    });
+  }
+
+  const fetchData = async () => {
+    setIsLoading(true)
+    try {
+      const currentLang = getCurrentPageLanguageFromPolylang();
+
+      // Fetch the posts from the given cpt and page.
+      const apiUrl = `${customBlocks.api.root}/posts/`;
+      const params = new URLSearchParams();
+      if (cpt) params.append('post_type', cpt);
+      if (perPage) params.append('per_page', perPage);
+      if (pageNum) params.append('page', pageNum);
+      if (currentLang) params.append('lang', currentLang);
+      const postsResponse = await fetch(`${apiUrl}?${params.toString()}`);
+
+      if (!postsResponse?.ok) {
+        throw new Error("Failed to fetch posts");
+      }
+      const fetchedData = await postsResponse?.json();
+      setResponse(fetchedData.details);
+    } catch (error) {
+      setResponse([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getCurrentPageLanguageFromPolylang = () => {
+    let currentLang = '';
+    if (is_edit_mode) {
+      // get the language of the current page where this block is being used
+      currentLang = document.querySelector("#post_lang_choice option[selected=selected]")?.getAttribute("lang");
+    } else {
+      currentLang = document.querySelector("html").getAttribute("lang");
+    }
+    if (!currentLang) {
+      return "";
+    }
+
+    // Get the first part of the language code (e.g. 'en-US' -> 'en' or 'en_US' -> 'es')
+    currentLang = currentLang.split(/[-_]/).shift();
+
+    return currentLang;
+  }
+
+  const postItem = (post, index) => {
+    const media = (post) => {
+      if (post.videoEmbed) {
+        return <div className="video-embed" dangerouslySetInnerHTML={{ __html: post.videoEmbed }}></div>
+      }
+
+      if (post.image) {
+        return (
+          <img loading="lazy" width="350" height="197" srcSet={post.srcset ? post.srcset : ''} src={post.image} className="attachment-large size-large wp-post-image" alt={post.title} />
+        )
+      }
+
+      return (
+        <span href="#" className="">
+          <span className="skeleton__content"></span>
+        </span>
+      )
+    };
+
+    // if block has the gallery block style, then the post.url will be # and will add the class galleryModal to the li which will create and open the modal on click.
+    const postURL = isCustomCptStyle ? null : post.url;
+    const modalClass = (isCustomCptStyle && !is_edit_mode) ? "galleryModal" : "";
+
+    return (
+      <li key={index} className="single-post-container">
+        <div data-id={post.id} className={`wp-block-latest-posts__featured-image ${modalClass}`}>
+          <a href={postURL} aria-label={post.title} target="_self" rel="noopener noreferrer">
+            {media(post)}
+          </a>
+        </div>
+        <a className="wp-block-latest-posts__post-title" href={postURL} target="_self" rel="noopener noreferrer" >
+          {post.title}
+        </a>
+        <time dateTime={post.date} className="wp-block-latest-posts__post-date">
+          {post.date}
+        </time>
+        <div className="wp-block-latest-posts__post-excerpt">
+          {post.excerpt}
+        </div>
+        <div className="wp-block-buttons">
+          <div className="wp-block-button is-style-fill wp-block-button__clear-style--text-icon">
+            <a className="wp-block-button__link has-blue-color has-transparent-background-color has-text-color has-background has-link-color has-text-align-left wp-element-button" href={postURL} target="_self" rel="noopener noreferrer" >
+              <span>{__("More information", "gutenberg-blocks")}</span>
+              <img decoding="async" style={{ width: "43px" }} src="/wp-content/plugins/gutenberg-blocks/assets/build/img/icons/Plus-blue-1.svg" />
+              <svg viewBox="0 0 43 43" width="43" height="43" fill="none" xmlns="http://www.w3.org/2000/svg" ><rect width="43" height="43" rx="21.5" fill="#FFE000"></rect>
+                <path d="M22.5 16V20.5H27V22.5H22.5V27H20.5V22.5H16V20.5H20.5V16H22.5Z" fill="#005DA1" ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    )
+  }
+
+  const renderData = () => {
+    if (isLoading) {
+      return (
+        new Array(parseInt(perPage)).fill(null).map((_, index) => {
+          return (<Skeleton key={index} />)
+        })
+      );
+    }
+
+    if (!response?.posts?.length && is_edit_mode) {
+      return (
+        <div className="single-post-container single-post-container--empty">
+          <div className="single-post-container__heading">
+            <span>⚠️</span>
+            <div className="post-text-container">
+              <p>{__('No posts found for the selected arguments. Please change the "CPT" or the "Posts per page" field from the right panel', "gutenberg-blocks")}</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (!response?.posts?.length) {
+      return null;
+    }
+
+    return response?.posts.map((post, index) => (
+      postItem(post, index)
+    ))
+  }
+
+  const renderPagination = () => {
+    if (isLoading) {
+      return (
+        <svg className="circular-spinner" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
+          <path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z">
+            <animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite" />
+          </path>
+        </svg>
+      )
+    }
+    if (!response?.posts?.length) {
+      return null;
+    }
+    return (
+      <Pagination perPage={perPage} page={pageNum} totalPosts={response?.total_posts} totalPages={response?.total_pages} isEditMode={is_edit_mode} setPage={setPageNum} scrollToRef={scrollToRef} />
+    )
+  }
+
+  return (
+    <>
+      <ul className="wp-block-latest-posts__list is-grid columns-3 has-dates alignwide wp-block-latest-posts" ref={scrollToRef}>
+        {renderData()}
+      </ul>
+      {renderPagination()}
+    </>
+  )
+}

@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "gutenberg-blocks/paginated-posts",
+	"version": "0.1.0",
+	"title": "paginated Posts",
+	"category": "custom-gutenberg-blocks",
+	"icon": "excerpt-view",
+	"description": "List of paginated posts.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"cpt": {
+			"type": "string",
+			"default": "post"
+		},
+		"perPage": {
+			"type": "number",
+			"default": 3
+		}
+	},
+	"textdomain": "gutenberg-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

@@ -1,0 +1,202 @@
+@use '../helpers' as *;
+@use '../components/editor-buttons' as *;
+
+.wp-block-latest-posts {
+  $component-breakpoint: $content-max;
+  padding-bottom: rem(12) !important;
+  margin-top: -32px !important;
+  max-width: unset !important;
+
+  &.columns-3 {
+    li {
+      width: 100%;
+
+      @include respond-at($small) {
+        width: calc(50% - 30px);
+      }
+
+      @include respond-at($large) {
+        width: calc(33.33333% - 30px);
+
+        &:not(:nth-child(3n)) {
+          margin-right: rem(0) !important;
+        }
+      }
+    }
+  }
+
+  %post-title {
+    @include lines(3);
+    padding-top: rem(32);
+    font-size: rem(18);
+    line-height: 1.55 !important;
+    font-weight: 500;
+    color: var(--wp--preset--color--black, #000);
+
+    @include respond-at($gutenberg-breakpoint) {
+      padding-top: rem(40);
+    }
+  }
+
+  &__list {
+    &.is-grid {
+      // $available_space_between_columns must be like the following formula to fit in the container in 3 columns:
+      //$available_space_between_columns: rem(calc((<container_width> - (<card_width>*<column_count>))/<card_gap_count>));
+      $available_space_between_columns: rem(calc((1280 - (397*3))/2));
+      column-gap: min(rem(28), $available_space_between_columns);
+      row-gap: calc(min(rem(28), $available_space_between_columns) - 28px);
+
+      // Make horizontal scrollable on mobile
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      display: flex;
+      // overflow-y: clip is needed to avoid the vertical scrollbar.
+      overflow-y: clip;
+      position: relative;
+      @include scroll(100%, 4px, var(--wp--preset--color--blue-light-1), #005DA1, 0);
+
+      >li {
+        display: flex;
+        flex-direction: column;
+        margin-right: 0 !important;
+        box-shadow: 0px 0px 15px 0px #B3CEE333;
+        min-width: rem(327);
+
+        >*:last-child {
+          padding-bottom: rem(24);
+        }
+
+        @include respond-at($small) {
+          margin-bottom: rem(28);
+        }
+      }
+
+      @include respond-at($component-breakpoint) {
+        flex-wrap: wrap;
+      }
+
+      @include respond-at($x-large) {
+        column-gap: max(rem(30), $available_space_between_columns);
+        row-gap: calc(max(rem(30), $available_space_between_columns) - 28px);
+      }
+    }
+
+    @include respond-at($component-breakpoint) {
+      justify-content: center;
+    }
+  }
+
+  &__featured-image {
+    height: rem(197);
+
+    >a {
+      @include size;
+      padding: 0;
+
+      &:where(:not(:has(> img))) {
+        background-color: #88888829;
+      }
+    }
+
+    img {
+      @include size;
+      object-fit: cover;
+    }
+
+    // This is for the post title element in the editor. It's a bug, the class wp-block-latest-posts__post-title is missing in the post title.
+    +a {
+      @extend %post-title;
+      @include padding-x-rem(32);
+      background-color: var(--wp--preset--color--white, #fff);
+    }
+  }
+
+  &__post-title,
+  :not(.wp-block-latest-posts__post-title)[rel="noreferrer noopener"],
+  // This 'not' selector is for the editor. It's a bug, the class wp-block-latest-posts__post-title is in the wrong place, it should be in the post title element, not in the image element. This is a workaround to apply styles for the post title on Editor. When they fix this bug, we can remove this 'not' selector.
+  &__post-date,
+  &__post-excerpt,
+  &__post-author,
+  .wp-block-buttons,
+  &__post-full-content {
+    @include padding-x-rem(32);
+    background-color: var(--wp--preset--color--white, #fff);
+  }
+
+  // This full rule set is for Editor. It's a bug, the class wp-block-latest-posts__post-title is in the wrong place, it should be in the post title element, not in the image element. This is a workaround to apply styles for the post title on Editor. When they fix this bug, we can remove this rule set.
+  :not(.wp-block-latest-posts__post-title)[rel="noreferrer noopener"] {
+    @extend %post-title;
+    @include padding-x-rem(32);
+    background-color: var(--wp--preset--color--white, #fff);
+  }
+
+  &__post-title {
+
+    // This :not selector is for the editor. It's a bug, the class wp-block-latest-posts__post-title is in the wrong place, it should be in the post title element, not in the image element. This is a workaround to avoid applying the styles to the image element.
+    &:not([rel="noreferrer noopener"]) {
+      @extend %post-title;
+    }
+  }
+
+  &__post-author {
+    padding-top: rem(8);
+  }
+
+  &__post-date,
+  &__post-excerpt,
+  &__post-author {
+    font-size: rem(14);
+    line-height: 2;
+    color: var(--wp--preset--color--gray-for-text);
+  }
+
+  &__post-date {
+    padding-top: rem(8);
+    padding-bottom: rem(16);
+  }
+
+  &__post-excerpt,
+  &__post-full-content {
+    @include lines(5);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .wp-block-button {
+    padding-top: rem(24);
+
+    &__link {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
+  // For the editor only. If we don't add this, the block will be too narrow in the editor and will set to 2 columns.
+  &.block-editor-block-list__block {
+    min-width: 1062px;
+  }
+
+  @include respond-at($gutenberg-breakpoint) {
+    padding-bottom: rem(52);
+    margin-top: 0 !important;
+  }
+}
+
+body .is-layout-constrained .wp-block-latest-posts {
+  $component-breakpoint: $content-max;
+  margin-left: rem(24) !important;
+
+  @include respond-at($component-breakpoint) {
+    margin-left: 0 !important;
+  }
+
+  @include respond-at($x-large) {
+    margin-left: rem(12) !important;
+    margin-right: rem(12) !important;
+  }
+
+  @include respond-at($huge) {
+    margin-left: rem(0) !important;
+    margin-right: rem(0) !important;
+  }
+}

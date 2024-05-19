@@ -1,0 +1,25 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-gutenberg-blocks-blocks-video-facade {
+	.lty-playbtn {
+		background-color: transparent !important;
+		width: 25% !important;
+		height: 25% !important;
+		border: none !important;
+		cursor: pointer;
+		&::before {
+			background-image: url("./playIcon.svg") !important;
+			width: 100%;
+			height: 100%;
+			background-size: contain;
+			background-repeat: no-repeat;
+			border: none !important;
+			background-position: center;
+		}
+
+	}
+}

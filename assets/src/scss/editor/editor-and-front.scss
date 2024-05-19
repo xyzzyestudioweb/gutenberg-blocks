@@ -1,0 +1,32 @@
+@use '../helpers' as *;
+@use '../components/editor-buttons';
+@use '../components/editor-counters';
+
+strong {
+  font-weight: 500;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.video-embed {
+  @include size(100%);
+
+  iframe {
+    @include size(100%);
+  }
+}
+
+body .is-layout-constrained>p:where(:not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide)) {
+  max-width: unset;
+}
+
+.wp-block-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.wp-block-buttons {
+  @include flex;
+}

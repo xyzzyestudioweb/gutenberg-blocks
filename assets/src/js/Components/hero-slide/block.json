@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "gutenberg-blocks/hero-slide",
+	"version": "0.1.0",
+	"title": "Hero slide",
+	"category": "custom-gutenberg-blocks",
+	"icon": "format-image",
+	"description": "Slide for hero slider parent block",
+	"parent": ["gutenberg-blocks/hero-slider"],
+	"example": {},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true
+		}
+	},
+	"attributes": {
+		"background": {
+			"type": "object",
+			"default": {}
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"subtitle": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaText": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaLink": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaTarget": {
+			"type": "string",
+			"default": "_self"
+		}
+	},
+	"textdomain": "gutenberg-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

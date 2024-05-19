@@ -1,0 +1,151 @@
+@use 'global-variables' as *;
+@use 'functions' as *;
+
+
+/* || MEDIA QUERIES */
+
+/// Responsive management for mobile first
+/// @access public
+/// @param {integer} $breakpoint - Breakpoint value
+/// @requires $breakpoint
+@mixin respond-at($breakpoint: $global-breakpoint) {
+  @media only screen and (min-width: #{$breakpoint}px) {
+    @content;
+  }
+}
+
+/// Responsive management for desktop first (max-width)
+/// @access public
+/// @param {integer} $breakpoint - Breakpoint value
+/// @requires $breakpoint
+@mixin respond-max($breakpoint: $global-breakpoint) {
+  @media only screen and (max-width: #{$breakpoint}px) {
+    @content;
+  }
+}
+
+/* || FONTS */
+
+/// Limits lines amount to show in text and add '...'.
+@mixin lines($lines-to-show: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines-to-show;
+  line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+}
+
+/// Unset the limit of lines to show in text.
+@mixin unset-lines {
+  overflow: visible;
+  text-overflow: clip;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+}
+
+
+/* || PADDINGS */
+
+/// Pass $size in px (without 'px') to get the rules in rem
+/// Use this to match both padding on x
+@mixin padding-x-rem($left: 1rem, $right: $left) {
+  padding-left: rem($left);
+  padding-right: rem($right);
+}
+
+/// Pass $size in px (without 'px') to get the rules in rem
+/// Use this to match both padding on y
+@mixin padding-y-rem($top, $bottom: $top) {
+  padding-top: rem($top);
+  padding-bottom: rem($bottom);
+}
+
+
+/* || DISPLAY RULES */
+
+/// Flex shorthand
+@mixin flex($justify-content: normal, $align-items: normal, $wrap: nowrap, $direction: row, $gap: null) {
+  display: flex;
+
+  @if $justify-content !=normal {
+    justify-content: $justify-content;
+  }
+
+  @if $align-items !=normal {
+    align-items: $align-items;
+  }
+
+  @if $wrap !=nowrap {
+    flex-wrap: $wrap;
+  }
+
+  flex-direction: $direction;
+
+  @if $gap !=null {
+    gap: $gap;
+  }
+}
+
+/// Grid shorthand. It makes 3 columns by default.
+@mixin grid($grid-t-c: repeat(3, 1fr), $gap: normal, $grid-t-r: auto) {
+  display: grid;
+  grid-template-columns: $grid-t-c;
+  gap: $gap;
+
+  @if $grid-t-r !=auto {
+    grid-template-rows: $grid-t-r;
+  }
+}
+
+/// Apply Top 0 Right 0 Bottom 0 Left 0
+@mixin pos0 {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/// Use this when you want to set any value for both: width and height.
+/// Use it without params if you want to set width and height to 100%.
+/// If you want both props to be equals you only need to pass one param.
+@mixin size($width: 100%, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+/// Set a placeholder to the element.
+/// Usage example: @include placeholder { color: pink; }
+@mixin scroll($width, $height, $area-bg, $thumb-bg, $border-radius, $border-width: 0, $border-color: $area-bg) {
+  /* Rules only for Firefox */
+  scrollbar-width: $width;
+  scrollbar-color: $thumb-bg $area-bg;
+
+  &::-webkit-scrollbar {
+    /* width of the entire scrollbar */
+    width: $width;
+    height: $height;
+  }
+
+  &::-webkit-scrollbar-track {
+    /* color of the tracking area */
+    background: $area-bg;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    /* color of the scroll thumb */
+    background-color: $thumb-bg;
+    /* roundness of the scroll thumb */
+    border-radius: $border-radius;
+    /* creates padding around scroll thumb */
+    border: $border-width solid $border-color;
+  }
+
+  /* Safari */
+  @supports (-webkit-appearance: none) {
+    & {
+      scrollbar-width: $width;
+      scrollbar-height: $height;
+    }
+  }
+}

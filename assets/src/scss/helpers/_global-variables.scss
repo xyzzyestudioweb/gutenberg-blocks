@@ -1,0 +1,30 @@
+/// In this file always set the values in px, but without the 'px'.
+
+
+/* || BREAKPOINTS */
+
+$s-small: 375;
+$small: 576;
+$medium: 768;
+$gutenberg-breakpoint: 782;
+$content-min: 825;
+$large: 992;
+$content-max: 1110;
+$x-large: 1200;
+$huge: 1440;
+$fhd: 1920;
+
+
+/* || COLORS */
+// If you use this project in a theme with a theme.json file, you can use the colors defined in the theme.json file and remove the colors defined here.
+:root {
+  --wp--preset--color--transparent: transparent;
+  --wp--preset--color--white: #fff;
+  --wp--preset--color--black: #000;
+  --wp--preset--color--yellow: #f2d600;
+  --wp--preset--color--blue: #0060a5;
+  --wp--preset--color--blue-button-hover: #10447a;
+  --wp--preset--color--blue-light-1: #0058971a;
+  --wp--preset--color--gray-for-text: #585858;
+  --wp--preset--color--gray-background-1: #e0ebf433;
+}

@@ -1,0 +1,34 @@
+@use '../helpers' as *;
+
+/* Editor only */
+.editor-styles-wrapper .is-layout-constrained.block-editor-block-list__block> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.editor-styles-wrapper .is-layout-constrained.block-editor-block-list__block {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.wp-block-latest-posts__list.is-grid {
+  column-gap: 14px;
+}
+
+.is-style-custom-cpt {
+  .wp-block-latest-posts {
+    &__list.is-grid {
+      column-gap: rem(14);
+    }
+  }
+}
+
+.is-style-counters {
+  .wp-block-column {
+    .wp-block-group {
+      >p {
+        height: unset;
+      }
+    }
+  }
+}

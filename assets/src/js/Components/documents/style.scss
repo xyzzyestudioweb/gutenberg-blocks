@@ -1,0 +1,88 @@
+@use '../../../scss/helpers' as *;
+@use '../../../scss/components/custom-blocks';
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-gutenberg-blocks-blocks-documents {
+	max-width: unset !important;
+
+	.files-container {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	.files-title {
+		width: 100%;
+		margin-top: 16px;
+		margin-bottom: 20px;
+	}
+
+	.single-file-container {
+		display: flex;
+		padding: 24px;
+		flex-direction: column;
+		gap: 32px;
+		border-left: solid 2px var(--wp--preset--color--yellow, #FFD700);
+		background-color: var(--wp--preset--color--white, #fff);
+
+		&__heading {
+			gap: 24px;
+			display: flex;
+			flex-grow: 1;
+			align-items: flex-start;
+			flex-direction: row;
+
+			.ct-code-block {
+				display: flex;
+			}
+
+			@include respond-at($medium) {
+				align-items: center;
+			}
+		}
+
+		@include respond-at($medium) {
+			flex-direction: row;
+			gap: 40px;
+			padding: 24px 40px;
+		}
+	}
+
+	.single-file-container img,
+	.single-file-container svg {
+		flex-shrink: 0;
+		height: auto;
+		width: 34px;
+
+		@include respond-at($medium) {
+			width: 40px;
+		}
+	}
+
+	.single-file-container .wp-block-button__link {
+		padding: 0;
+	}
+
+	.single-file-container p {
+		margin: 0;
+		line-height: 1.625;
+	}
+
+	.file__link-container .ct-code-block {
+		display: flex;
+	}
+
+	.file__link-container {
+		align-self: flex-end;
+		min-width: 166px;
+
+		@include respond-at($medium) {
+			align-self: center;
+		}
+	}
+}

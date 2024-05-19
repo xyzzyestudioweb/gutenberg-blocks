@@ -1,0 +1,118 @@
+@use '../../../scss/helpers' as *;
+@use '../../../scss/components/custom-blocks';
+
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-gutenberg-blocks-blocks-hero-slider {
+	$slider-breakpoint: 992;
+	position: relative;
+
+	.hero-swiper {
+		height: 100%;
+	}
+
+	.swiper-buttons {
+		max-width: var(--wp--style--global--wide-size);
+		position: relative;
+		bottom: 0;
+		margin-left: auto;
+		margin-right: auto;
+		z-index: 1;
+		// width: fit-content;
+
+		svg {
+			path {
+				stroke-width: 3;
+
+				@include respond-at($slider-breakpoint) {
+					stroke-width: 2;
+				}
+			}
+		}
+	}
+
+	.swiper-next {
+		left: 80px;
+
+		@include respond-at($slider-breakpoint) {
+			left: unset;
+			right: 0;
+		}
+	}
+
+	.swiper-prev {
+		left: 24px;
+
+		@include respond-at($slider-breakpoint) {
+			left: unset;
+			right: 72px;
+		}
+	}
+
+	.swiper-next,
+	.swiper-prev {
+		// color: var(--wp--preset--color--white, #fff) !important;
+		z-index: 1;
+		position: absolute;
+		bottom: 48px;
+		width: 40px;
+		height: 40px;
+		cursor: pointer;
+
+		&::after {
+			font-size: 20px !important;
+		}
+
+		&.swiper-button-disabled {
+			opacity: .6;
+		}
+
+		@include respond-at($slider-breakpoint) {
+			width: 56px;
+			height: 56px;
+			bottom: 64px;
+		}
+	}
+
+	.autoplay-progress {
+		display: none;
+		z-index: 1;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 8px;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		font-weight: 500;
+		justify-content: flex-start;
+
+		.progress {
+			height: 100%;
+			width: 0;
+			background: var(--wp--preset--color--yellow, #FFE000);
+			opacity: 1;
+			z-index: 2;
+		}
+
+		.progress-bg {
+			height: 100%;
+			width: 100%;
+			background: var(--wp--preset--color--white, #fff);
+			opacity: .8;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+	}
+
+	@include respond-max($slider-breakpoint) {
+		height: 100%;
+	}
+}

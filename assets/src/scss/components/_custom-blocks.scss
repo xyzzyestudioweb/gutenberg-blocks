@@ -1,0 +1,205 @@
+@use '../helpers' as *;
+@use '../base/animations';
+
+/** 
+* This file is used to add common styles shared between all custom blocks.
+* .gutenberg-custom-block is a common class for all custom blocks.
+*/
+.gutenberg-custom-block {
+  $slider-breakpoint: 992;
+
+  %skeleton-content {
+    background-color: var(--wp--preset--color--gray-form-text, #888888);
+    color: var(--wp--preset--color--gray-form-text, #888888);
+    display: block;
+    animation: fade-in-out 1s ease-in-out infinite;
+  }
+
+  :where(.wp-site-blocks *:focus) {
+    outline: none;
+  }
+
+  .circular-spinner {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    height: auto;
+    display: block;
+
+    path {
+      fill: var(--wp--preset--color--blue, #005da1);
+    }
+  }
+
+  .single-post-container {
+    &__heading {
+      gap: 24px;
+      display: flex;
+      flex-grow: 1;
+      align-items: flex-start;
+      flex-direction: row;
+
+      >span {
+        padding-left: rem(15);
+      }
+
+      .ct-code-block {
+        display: flex;
+      }
+
+      @include respond-at($medium) {
+        align-items: center;
+      }
+    }
+  }
+
+  .skeleton-component {
+    .skeleton__content {
+      @extend %skeleton-content;
+    }
+  }
+
+  .single-post-container,
+  .single-file-container {
+
+    .wp-block-latest-posts__featured-image {
+      .skeleton__content {
+        height: 100% !important;
+
+        &.file-icon {
+          @include size(rem(40), rem(48));
+        }
+      }
+    }
+
+    &--skeleton {
+      min-width: rem(327);
+      cursor: progress;
+
+      .skeleton__content {
+        height: 23px;
+        width: 100%;
+
+        &--icon {
+          width: 43px !important;
+          height: 43px !important;
+          flex-shrink: 0;
+          background-color: var(--wp--preset--color--gray-form-text, #888888) !important;
+        }
+      }
+
+      .wp-block-latest-posts__post-excerpt {
+        .skeleton__content {
+          height: 46px;
+        }
+      }
+
+      .wp-block-latest-posts__post-date {
+        .skeleton__content {
+          width: 70%;
+        }
+      }
+
+      .wp-element-button {
+        cursor: progress;
+
+        .skeleton__content {
+          background-color: transparent;
+          height: unset;
+        }
+
+        svg {
+          width: initial;
+          height: initial;
+        }
+
+        &:hover {
+          text-decoration: none;
+
+          svg {
+            rect {
+              fill: rgb(136, 136, 136);
+            }
+
+            path {
+              fill: rgb(136, 136, 136);
+              stroke: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .single-file-container {
+    &--skeleton {
+
+      border-left: solid 2px #e9e9e9;
+
+      // .wp-element-button {
+      //   &:hover {
+      //     path {
+      //       stroke: #888!important;
+      //     }
+      //   }
+      // }
+    }
+  }
+
+  // We are using pagination bullets of swiper slider only in the modal gallery.
+  .swiper-pagination {
+    z-index: 1;
+    // top: calc(100% - var(--pbottom) - 64px) !important;
+    position: absolute;
+    transform: translateY(-100%);
+    left: calc(50% + 45px) !important;
+    width: auto;
+    bottom: unset !important;
+    width: auto !important;
+
+    line-height: 6px;
+    height: 6px;
+    display: flex;
+    align-items: center;
+
+    .swiper-pagination-bullet {
+      --swiper-pagination-bullet-horizontal-gap: 6px;
+      height: 2px;
+      width: 20px;
+      opacity: 1;
+      background: var(--wp--preset--color--white, #fff);
+      border-radius: 100px !important;
+      transition: width 0.15s ease-in-out;
+      opacity: 0.5;
+
+      &.swiper-pagination-bullet-active {
+        width: 38px;
+        height: 6px;
+        top: 2px;
+        opacity: 1;
+      }
+
+      @include respond-max($slider-breakpoint) {
+        left: 0 !important;
+      }
+    }
+
+    @include respond-max($slider-breakpoint) {
+      bottom: 38px !important;
+      top: unset !important;
+      text-align: center;
+      left: 50% !important;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+// Icons for the custom blocks
+.dashicons-excerpt-view,
+.dashicons-media-document,
+.dashicons-cover-image {
+  &:before {
+    color: var(--wp--preset--color--blue, #005da1);
+  }
+}
