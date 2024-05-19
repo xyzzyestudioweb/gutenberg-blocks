@@ -1,7 +1,6 @@
 # Gutenberg Blocks
 
-Contributors:      Adriana Hernández
-
+Contributors:      Adriana Hernández Regueiro
 Tags:              gutenberg, block, wordpress, plugin
 Tested up to:      6.5.3
 Stable tag:        0.1.0
@@ -28,7 +27,7 @@ Group of reusable Gutenberg blocks to use on any project.
 
 ## Contributing
 
-You are welcome to contribute with this project. You can create a fork and send PR or open issues in https://github.com/adrianahdez/gutenberg-blocks
+You are welcome to contribute with this project. You can create a fork from [this repository](https://github.com/adrianahdez/gutenberg-blocks) and send PRs or open issues [here](https://github.com/adrianahdez/gutenberg-blocks/issues).
 
 ## Changelog
 

@@ -27,7 +27,7 @@ Group of reusable Gutenberg blocks to use on any project.
 
 == Contributing
 
-You are welcome to contribute with this project. You can create a fork and send PR or open issues in https://github.com/adrianahdez/gutenberg-blocks
+You are welcome to contribute with this project. You can create a fork and send PR or open issues in https://github.com/adrianahdez/gutenberg-blocks/issues
 
 == Changelog ==
 
