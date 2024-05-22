@@ -2,18 +2,16 @@ import { useEffect, useState, useRef } from "react";
 import { __ } from "@wordpress/i18n";
 import Pagination from "./Pagination";
 import Skeleton from "./Skeleton";
-import InitModals from "../../Services/InitModals";
-import { waitForElement } from "../../Services/CommonBlockFunctions";
+import GalleryModal from "../modal/GalleryModal";
 
 export default function Component({ attributes, is_edit_mode, blockProps }) {
-  const { cpt, perPage, className } = attributes;
+  const { cpt, perPage, className, textForShowGalleryButton } = attributes;
 
   const [response, setResponse] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [modalData, setModalData] = useState(null);
   const scrollToRef = useRef();
-  const [isCustomCptStyle, setIsCustomCptStyle] = useState(false);
-  const [isModalsInitialized, setIsModalsInitialized] = useState(false);
 
   const useEffectProps = is_edit_mode ? [cpt, perPage] : [pageNum];
   useEffect(() => {
@@ -21,51 +19,7 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
     return () => clearTimeout(timeoutId);
   }, useEffectProps)
 
-  useEffect(() => {
-    if (response?.posts?.length && isCustomCptStyle) InitModals(response?.posts);
-    setIsModalsInitialized(true);
-  }, [response]);
-
-  useEffect(() => {
-    if (isModalsInitialized && !is_edit_mode) InitSlider();
-  }, [isModalsInitialized]);
-
-
-  useEffect(() => {
-    if (!is_edit_mode && className === 'is-style-custom-cpt') {
-      setIsCustomCptStyle(true);
-    }
-
-    if (is_edit_mode && blockProps.className?.includes('is-style-custom-cpt')) {
-      setIsCustomCptStyle(true);
-    }
-  }, [className]);
-
-  const InitSlider = () => {
-
-    const initSwiper = (slider) => {
-      const numberOfSlides = slider.querySelectorAll(".swiper-slide").length;
-      const parent = slider.parentElement;
-      new Swiper(slider, {
-        centeredSlides: true,
-        grabCursor: true,
-        autoplay: false,
-        loop: numberOfSlides > 1,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        navigation: {
-          nextEl: parent.querySelector(".swiper-next"),
-          prevEl: parent.querySelector(".swiper-prev"),
-        },
-      });
-    };
-
-    waitForElement('.gallerySwiper').then((slider) => {
-      initSwiper(slider);
-    });
-  }
+  const hasGalleryStyle = (!is_edit_mode && className === 'is-style-custom-cpt') || (is_edit_mode && blockProps.className?.includes('is-style-custom-cpt'));
 
   const fetchData = async () => {
     setIsLoading(true)
@@ -111,6 +65,18 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
     return currentLang;
   }
 
+  const handlePostClick = (e) => {
+    if (!hasGalleryStyle || is_edit_mode) {
+      return;
+    }
+
+    setModalData({
+      idSelected: e.currentTarget.dataset.postId ? parseInt(e.currentTarget.dataset.postId) : 0,
+      contentData: response.posts,
+      handleCloseModal: () => setModalData(null)
+    });
+  }
+
   const postItem = (post, index) => {
     const media = (post) => {
       if (post.videoEmbed) {
@@ -131,12 +97,11 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
     };
 
     // if block has the gallery block style, then the post.url will be # and will add the class galleryModal to the li which will create and open the modal on click.
-    const postURL = isCustomCptStyle ? null : post.url;
-    const modalClass = (isCustomCptStyle && !is_edit_mode) ? "galleryModal" : "";
+    const postURL = hasGalleryStyle ? null : post.url;
 
     return (
-      <li key={index} className="single-post-container">
-        <div data-id={post.id} className={`wp-block-latest-posts__featured-image ${modalClass}`}>
+      <li key={index} data-post-id={post.id} className="single-post-container" onClick={handlePostClick}>
+        <div className={`wp-block-latest-posts__featured-image`}>
           <a href={postURL} aria-label={post.title} target="_self" rel="noopener noreferrer">
             {media(post)}
           </a>
@@ -197,29 +162,37 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
   }
 
   const renderPagination = () => {
-    if (isLoading) {
-      return (
-        <svg className="circular-spinner" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
-          <path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z">
-            <animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite" />
-          </path>
-        </svg>
-      )
-    }
-    if (!response?.posts?.length) {
-      return null;
+    if (isLoading || !response || response.total_posts <= perPage) {
+      return;
     }
     return (
       <Pagination perPage={perPage} page={pageNum} totalPosts={response?.total_posts} totalPages={response?.total_pages} isEditMode={is_edit_mode} setPage={setPageNum} scrollToRef={scrollToRef} />
     )
   }
 
+  const renderButton = () => {
+    if (!hasGalleryStyle || !textForShowGalleryButton) return null;
+
+    return (
+
+      <div className="wp-block-buttons wp-block-buttons--show-gallery">
+        <div className="wp-block-button is-style-outline wp-block-button__outline-style--text">
+          <button className="wp-block-button__link has-blue-color has-text-color has-link-color has-text-align-left wp-element-button" onClick={handlePostClick}>{textForShowGalleryButton}</button>
+        </div>
+      </div>
+
+    )
+  }
+
+
   return (
     <>
+      {renderButton()}
       <ul className="wp-block-latest-posts__list is-grid columns-3 has-dates alignwide wp-block-latest-posts" ref={scrollToRef}>
         {renderData()}
       </ul>
       {renderPagination()}
+      {modalData && (<GalleryModal {...modalData} />)}
     </>
   )
 }

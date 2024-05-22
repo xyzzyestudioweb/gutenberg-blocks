@@ -1,31 +1,95 @@
+import { useEffect, useRef } from "react";
 import { __ } from "@wordpress/i18n";
 
 /** 
- * Render the modal content for Gallery Modal.
+ * Render the modal and its content (the slider) for Gallery Modal.
 */
-export default function GalleryModal({ idSelected, contentData = {} }) {
-  // TODO: Don't forget to add the thumbnail images at the bottom of the slides.
+export default function GalleryModal({ idSelected, contentData = [], handleCloseModal }) {
 
-  const printSlides = (contentData) => {
+  const dialogRef = useRef();
+  const sliderRef = useRef();
+  const thumbRef = useRef();
+
+  useEffect(() => {
+    const dialogElement = dialogRef.current;
+    dialogElement.showModal();
+    initSwiper(sliderRef.current, thumbRef.current);
+  });
+
+  const initSwiper = (slider, thumbs) => {
+
+    const swiperThumbs = new Swiper(thumbs, {
+      spaceBetween: 16,
+      slidesPerView: 3,
+      loop: false,
+      freeMode: true,
+      watchSlidesVisibility: true,
+      watchSlidesProgress: true,
+      grabCursor: true,
+    });
+
+    const swiper = new Swiper(slider, {
+      spaceBetween: 16,
+      loop: true,
+      grabCursor: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-next",
+        prevEl: ".swiper-prev",
+      },
+      thumbs: {
+        swiper: swiperThumbs,
+      },
+    });
+
+    contentData.forEach((item, i) => {
+      if (item.id === idSelected) {
+        swiper.slideToLoop(i, 0);
+        return;
+      }
+    }
+    );
+  }
+
+  const printSlides = (isThumbs = false) => {
+    const media = (post, index) => {
+      if (post.videoEmbed) {
+        return <div className="video-embed slide-background" dangerouslySetInnerHTML={{ __html: post.videoEmbed }}></div>
+      }
+
+      if (post.image) {
+        return (
+          <img loading={index !== 0 ? 'lazy' : ''} srcSet={post.srcset ? post.srcset : ''} className="slide-background" src={post.image} alt={post.title} />
+        )
+      }
+
+      return (
+        <span>
+          <span className="skeleton__content"></span>
+        </span>
+      )
+    };
+
     return contentData.map((post, index) => (
-      <div className="swiper-slide" key={index}>
+      <div data-id={post.id} className="swiper-slide" key={index}>
         <div className="slide-wrapper">
-          <div className="slide-heading">
-            <h1 className="slide-title">{post.title}</h1>
-            <p className="slide-subtitle">{post.excerpt}</p>
-          </div>
+          {!isThumbs ? (
+            <div className="slide-heading">
+              <h5 className="slide-title">{post.title}</h5>
+              <p className="slide-subtitle">{post.excerpt}</p>
+            </div>
+          ) : null}
           <div className="slide-body">
-            {post.videoEmbed ? (
-              <div className="video-embed slide-background" dangerouslySetInnerHTML={{ __html: post.videoEmbed }}></div>
-            ) : (
-              <img loading={index !== 0 ? 'lazy' : ''} srcSet={post.srcset ? post.srcset : ''} className="slide-background" src={post.image} alt={post.title} />
-            )}
+            {media(post, index)}
           </div>
-          {!post.videoEmbed && post.image ? (
+          {!post.videoEmbed && post.image && !isThumbs ? (
             <div className="slide-footer">
               <div className="file__link-container wp-block-buttons">
                 <div className="wp-block-button is-style-fill wp-block-button__clear-style--text-icon">
-                  <a href={post.image} download target="_blank" rel="noopener noreferrer" className="wp-block-button__link has-blue-color has-transparent-background-color has-text-color has-background has-link-color has-text-align-left wp-element-button">
+                  <a href={post.image} download={post.title} target="_blank" rel="noopener noreferrer" className="wp-block-button__link has-blue-color has-transparent-background-color has-text-color has-background has-link-color has-text-align-left wp-element-button">
                     <span>{__("Download", "gutenberg-blocks")}</span>
                     <img style={{ width: "43px" }} src="/wp-content/plugins/gutenberg-blocks/assets/build/img/icons/download.svg"
                     />
@@ -40,35 +104,52 @@ export default function GalleryModal({ idSelected, contentData = {} }) {
           ) : null}
         </div>
       </div>
-    )
+    ));
+  }
+
+  const modalContent = () => {
+    return (
+      <section className="gallery-slider">
+        <div ref={sliderRef} className="gallerySwiper swiper">
+          <div className="swiper-wrapper">
+            {printSlides()}
+          </div>
+          <div className="swiper-buttons">
+            <div className="swiper-next">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="white" fillOpacity="0.9" />
+                <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="white" />
+                <path d="M35 28L29 34M35 28L29 22M35 28L21 28" stroke="#005DA1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <div className="swiper-prev">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="white" fillOpacity="0.9" />
+                <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="white" />
+                <path d="M21 28L27 22M21 28L27 34M21 28L35 28" stroke="#005DA1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div ref={thumbRef} className="swiper gallerySwiperThumbs">
+          <div className="swiper-wrapper">
+            {printSlides(true)}
+          </div>
+        </div>
+      </section>
     );
   }
 
   return (
-    <section className="gallery-slider">
-      <div className="swiper gallerySwiper">
-        <div className="swiper-wrapper">
-          {printSlides(contentData)}
-        </div>
+    <dialog ref={dialogRef} className="modals galleryModal">
+      <div className="modals__content">
+        <menu>
+          <button className="cancelButton" type="reset" onClick={handleCloseModal}>
+            <img style={{ width: "18px" }} src="/wp-content/plugins/gutenberg-blocks/assets/build/img/icons/close.svg" />
+          </button>
+        </menu>
+        {modalContent()}
       </div>
-
-      <div className="swiper-pagination"></div>
-      <div className="swiper-buttons">
-        <div className="swiper-next">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" >
-            <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="white" fillOpacity="0.9" />
-            <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="white" />
-            <path d="M35 28L29 34M35 28L29 22M35 28L21 28" stroke="#005DA1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <div className="swiper-prev">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" >
-            <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="white" fillOpacity="0.9" />
-            <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="white" />
-            <path d="M21 28L27 22M21 28L27 34M21 28L35 28" stroke="#005DA1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      </div>
-    </section>
+    </dialog>
   );
 }

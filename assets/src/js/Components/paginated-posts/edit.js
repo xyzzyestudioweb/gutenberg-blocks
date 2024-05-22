@@ -33,7 +33,8 @@ import Component from './Component';
  */
 export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
-	const { cpt, perPage } = attributes;
+	const { cpt, perPage, textForShowGalleryButton } = attributes;
+	const hasGalleryStyle = blockProps.className?.includes('is-style-custom-cpt');
 
 	const handleCptChange = (cpt) => {
 		setAttributes({ cpt: cpt });
@@ -42,6 +43,10 @@ export default function Edit({ attributes, setAttributes }) {
 	const handlePerPageChange = (perPage) => {
 		setAttributes({ perPage: parseInt(perPage) });
 	};
+
+	const handleTextChange = (text) => {
+		setAttributes({ textForShowGalleryButton: text });
+	}
 
 	return (
 		<>
@@ -63,6 +68,13 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={handlePerPageChange}
 						type="number"
 					/>
+
+					{hasGalleryStyle && (<TextControl
+						label={__('Text for "Show gallery" button', 'gutenberg-blocks')}
+						value={textForShowGalleryButton}
+						onChange={handleTextChange}
+						type="text"
+					/>)}
 				</PanelBody>
 			</InspectorControls>
 

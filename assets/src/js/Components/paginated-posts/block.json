@@ -19,6 +19,10 @@
 		"perPage": {
 			"type": "number",
 			"default": 3
+		},
+		"textForShowGalleryButton": {
+			"type": "string",
+			"default": "View gallery"
 		}
 	},
 	"textdomain": "gutenberg-blocks",
