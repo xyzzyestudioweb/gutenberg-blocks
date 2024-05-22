@@ -18,6 +18,18 @@ strong {
   }
 }
 
+.skeleton__content {
+  background-color: var(--wp--preset--color--gray-form-text, #888888);
+  color: var(--wp--preset--color--gray-form-text, #888888);
+  display: block;
+  opacity: .18;
+  height: 100% !important;
+
+  &.file-icon {
+    @include size(rem(40), rem(48));
+  }
+}
+
 body .is-layout-constrained>p:where(:not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide)) {
   max-width: unset;
 }
@@ -25,6 +37,14 @@ body .is-layout-constrained>p:where(:not(.alignleft):not(.alignright):not(.align
 .wp-block-column {
   display: flex;
   flex-direction: column;
+}
+
+.wp-block-group {
+  &.has-blue-background-color {
+    a {
+      color: var(--wp--preset--color--white, #fff);
+    }
+  }
 }
 
 .wp-block-buttons {
