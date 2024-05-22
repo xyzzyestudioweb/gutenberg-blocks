@@ -8,6 +8,10 @@
   height: auto;
 }
 
+body:has(dialog[open]) {
+  overflow-y: hidden;
+}
+
 dialog {
   @extend %make-it-full-screen;
   padding: 56px 24px;
@@ -24,10 +28,11 @@ dialog {
     align-items: center;
     justify-content: flex-end;
     position: absolute;
-    top: rem(30);
-    right: rem(24);
+    top: rem(20);
+    right: rem(14);
     margin-block-end: 0;
     margin-block-start: 0;
+    padding-left: 0;
 
     .cancelButton {
       border: none;
@@ -37,11 +42,12 @@ dialog {
       padding-block-start: 0;
       padding-inline-end: 0;
       padding-inline-start: 0;
+      padding: 10px;
     }
 
     @include respond-at($large) {
-      top: rem(40);
-      right: rem(40);
+      top: rem(30);
+      right: rem(30);
     }
   }
 
