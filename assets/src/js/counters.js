@@ -13,9 +13,10 @@
 			'.is-style-counters .wp-block-column .wp-block-group > p:first-child',
 			(stat) => {
 				// pattern used to separate input number from html into an array of numbers and non numbers. EX $65.3M -> ["$65.3M", "$", "65", ".", "3", "M"]
-				const patt = /(\D+)?(\d+)(\D+)?(\d+)?(\D+)?(\d+)?(\D+)/;
+				const patt = /(\D+)?(\d+)?(\D+)?(\d+)?(\D+)?(\d+)?(\D+)?/;
 				const time = 500;
-				let result = [...patt.exec(stat.textContent)];
+				const arr = patt.exec(stat.textContent)
+				let result = [...arr];
 				let fresh = true;
 				let ticks;
 
@@ -30,6 +31,7 @@
 
 				for (let res of result) {
 					if (isNaN(res)) {
+						res = res.replace(/\s/g, '&nbsp;');
 						stat.insertAdjacentHTML('beforeend', `<span>${res}</span>`);
 					} else {
 						for (let i = 0; i < res.length; i++) {
