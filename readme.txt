@@ -1,7 +1,7 @@
 === Gutenberg Blocks ===
 
 Contributors:      Adriana Hernández Regueiro
-Tags:              gutenberg, block, wordpress, plugin
+Tags:              gutenberg, blocks, wordpress, plugin
 Tested up to:      6.5.3
 Stable tag:        0.1.0
 License:           GPL-3.0-or-later
