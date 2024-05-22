@@ -27,7 +27,7 @@
   .wp-block-column {
     .wp-block-group {
       >p {
-        height: unset;
+        height: unset!important;
       }
     }
   }

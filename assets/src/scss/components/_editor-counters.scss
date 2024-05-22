@@ -18,17 +18,20 @@
       >p {
         &:first-child {
           color: var(--wp--preset--color--blue, #005DA1);
-          font-size: rem(48);
+          // font-size: rem(48);
+          font-size: rem(40);
           line-height: 1.1666666667;
           font-weight: 800;
           margin-bottom: rem(32);
 
 
-          display: flex;
+          // display: flex;
           overflow: hidden;
           align-items: center;
           justify-content: flex-start;
           height: 56px;
+          display: -webkit-box;
+          width: -webkit-fill-available;
 
           >span {
             z-index: 1;
@@ -49,23 +52,31 @@
             height: 100%;
           }
 
+          @include respond-at($gutenberg-breakpoint) {
+            font-size: rem(25);
+          }
+
           @include respond-at($component-breakpoint) {
             margin-bottom: rem(40);
+            font-size: rem(38);
+          }          
+          
+          @include respond-at($x-large) {
+            margin-bottom: rem(40);
+            font-size: rem(42);
           }
         }
 
         &:nth-child(2) {
-          @include lines(2);
           color: var(--wp--preset--color--black, #000);
           margin-bottom: rem(16);
           line-height: 1.625;
+          flex-grow: 1;
         }
 
         &:nth-child(3) {
-          @include lines(3);
           color: var(--wp--preset--color--gray-for-text, #555555);
           margin-bottom: rem(8);
-          flex-grow: 1;
           line-height: 2;
 
           @include respond-at($gutenberg-breakpoint) {
