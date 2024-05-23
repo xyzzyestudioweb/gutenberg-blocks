@@ -176,7 +176,7 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
   }
 
   const renderButton = () => {
-    if (!hasGalleryStyle || !textForShowGalleryButton) return null;
+    if (!hasGalleryStyle || !textForShowGalleryButton || !response?.posts?.length) return null;
 
     return (
 
