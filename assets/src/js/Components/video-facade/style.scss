@@ -6,13 +6,17 @@
  */
 
 .wp-block-gutenberg-blocks-video-facade {
+	max-width: var(--wp--style--global--wide-size) !important;
+
 	.lite-yt {
 		width: 100%;
 		max-width: 100%;
 		height: auto;
+
 		&::before {
 			background-image: none !important;
 		}
+
 		.lty-playbtn {
 			background-image: url('./playIcon.svg');
 			background-size: 25% 25%;

@@ -18,6 +18,7 @@
 
 	.single-post-container {
 		background-color: var(--wp--preset--color--white, #fff);
+		cursor: pointer;
 
 		&--empty {
 			border-left: solid 2px var(--wp--preset--color--yellow, #FFD700);
