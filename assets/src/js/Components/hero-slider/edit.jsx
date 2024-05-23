@@ -67,7 +67,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	const onSelectSlide = (slideID) => {
 		let currentBlock = document.getElementById("block-" + slideID);
 		if (currentBlock) {
-			let inners = currentBlock.parentElement.getElementsByClassName("wp-block-gutenberg-blocks-blocks-hero-slide");
+			let inners = currentBlock.parentElement.getElementsByClassName("wp-block-gutenberg-blocks-hero-slide");
 			for (let i = 0; i < inners.length; i++) {
 				inners[i].style.display = "none";
 			}
