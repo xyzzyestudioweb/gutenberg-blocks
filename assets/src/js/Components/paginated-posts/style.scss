@@ -240,6 +240,12 @@
 				.slide-body {
 					height: 100%;
 
+					.video-thumbnail {
+						svg {
+							@include size(30px);
+						}
+					}
+
 					span {
 						@include size(100%);
 						display: block

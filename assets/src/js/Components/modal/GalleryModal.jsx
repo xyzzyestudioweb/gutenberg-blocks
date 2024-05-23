@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { __ } from "@wordpress/i18n";
+import { getThumbnailFromVideo } from "../../Services/CommonBlockFunctions";
+import VideoCover from "../common-frontend/VideoCover";
 
 /** 
  * Render the modal and its content (the slider) for Gallery Modal.
@@ -57,7 +59,14 @@ export default function GalleryModal({ idSelected, contentData = [], handleClose
   const printSlides = (isThumbs = false) => {
     const media = (post, index) => {
       if (post.videoEmbed) {
-        return <div className="video-embed slide-background" dangerouslySetInnerHTML={{ __html: post.videoEmbed }}></div>
+        if (isThumbs) {
+          const videoThumbnail = getThumbnailFromVideo(post.videoEmbed);
+          return (
+            <VideoCover videoThumbnail={videoThumbnail} imgAlt={post.title} />
+          )
+        } else {
+          return <div className="video-embed slide-background" dangerouslySetInnerHTML={{ __html: post.videoEmbed }}></div>
+        }
       }
 
       if (post.image) {
