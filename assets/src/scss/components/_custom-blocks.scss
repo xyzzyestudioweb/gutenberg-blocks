@@ -54,8 +54,8 @@
   }
 
   .wp-block-latest-posts {
-    padding-bottom: 0!important;
-    margin-top: 0!important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
   }
 
   .single-post-container,
@@ -177,7 +177,8 @@
 // Icons for the custom blocks
 .dashicons-excerpt-view,
 .dashicons-media-document,
-.dashicons-cover-image {
+.dashicons-cover-image,
+.dashicons-format-video {
   &:before {
     color: var(--wp--preset--color--blue, #005da1);
   }

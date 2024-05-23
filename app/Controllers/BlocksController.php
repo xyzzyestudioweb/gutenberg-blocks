@@ -71,7 +71,7 @@ class BlocksController {
     public function register_static_block_type() {
         register_block_type( $this->project_path . 'assets/build/js/Components/hero-slider' );
         register_block_type( $this->project_path . 'assets/build/js/Components/hero-slide' );
-        // register_block_type( $this->project_path . 'assets/build/js/Components/video-facade' );
+        register_block_type( $this->project_path . 'assets/build/js/Components/video-facade' );
     }
 
     /**
@@ -116,7 +116,8 @@ class BlocksController {
         $this->localize();
         !wp_script_is( 'swiper', 'enqueued' ) && (has_block( 'gutenberg-blocks/hero-slider' ) || has_block( 'gutenberg-blocks/paginated-posts' ) ) && wp_enqueue_script( 'swiper', PLUGIN_URL . 'assets/build/lib/swiper/swiper-bundle.min.js', [], wp_get_theme()->get( 'Version' ) );
         !wp_style_is( 'swiper', 'enqueued' ) && (has_block( 'gutenberg-blocks/hero-slider' ) || has_block( 'gutenberg-blocks/paginated-posts' ) ) && wp_enqueue_style( 'swiper', PLUGIN_URL . 'assets/build/lib/swiper/swiper-bundle.min.css', [], wp_get_theme()->get( 'Version' ) );
-        // !wp_script_is( 'lite-yt-embed', 'enqueued' ) && has_block( 'gutenberg-blocks/video-facade' ) && wp_enqueue_script( 'lite-yt-embed', PLUGIN_URL . 'assets/build/lib/lite-yt-embed/lite-yt-embed.min.js', [], wp_get_theme()->get( 'Version' ) );
-        // !wp_style_is( 'lite-yt-embed', 'enqueued' ) && has_block( 'gutenberg-blocks/video-facade' ) && wp_enqueue_style( 'lite-yt-embed', PLUGIN_URL . 'assets/build/lib/lite-yt-embed/lite-yt-embed.min.css', [], wp_get_theme()->get( 'Version' ) );
+        
+        !wp_script_is( 'lite-yt-embed', 'enqueued' ) && has_block( 'gutenberg-blocks/video-facade' ) && wp_enqueue_script( 'lite-yt-embed', PLUGIN_URL . 'assets/build/lib/lite-yt-embed/lite-yt-embed.min.js', [], wp_get_theme()->get( 'Version' ) );
+        !wp_style_is( 'lite-yt-embed', 'enqueued' ) && has_block( 'gutenberg-blocks/video-facade' ) && wp_enqueue_style( 'lite-yt-embed', PLUGIN_URL . 'assets/build/lib/lite-yt-embed/lite-yt-embed.min.css', [], wp_get_theme()->get( 'Version' ) );
     }
 }
