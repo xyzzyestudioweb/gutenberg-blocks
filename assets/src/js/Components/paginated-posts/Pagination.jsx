@@ -49,8 +49,9 @@ export default function Pagination({ perPage, page, totalPosts, totalPages, isEd
     setPage(newPage);
 
     // Scroll to top of container with an offset
-    const offset = 92;
-    window.scrollTo({ top: scrollToRef.current.offsetTop - offset, behavior: "smooth" });
+    const offset = 152;
+    const elemPositRelativeToUserViewport = scrollToRef.current.getBoundingClientRect().top;
+    window.scrollTo({ top: elemPositRelativeToUserViewport + window.scrollY - offset, behavior: "smooth" });
   };
 
   const printArrow = (direction, status) => {
