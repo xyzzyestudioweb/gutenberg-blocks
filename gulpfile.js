@@ -84,7 +84,10 @@ function jsApp() {
  * Copy all from paths.src_img to paths.dist_img
  */
 function distImg() {
-	return src(paths.src_img + "**/*").pipe(dest(paths.dist_img));
+	return streamqueue(
+		{ objectMode: true },
+		src(paths.src_img + "**/*").pipe(dest(paths.dist_img))
+	)
 }
 
 function components() {
@@ -110,11 +113,12 @@ function lib() {
 /*
  * Watch for changes
  */
-function app() {
+function appWatch() {
 	distImg();
 	lib();
 	cssApp();
 	jsApp();
+
 	watch(
 		[paths.src_scss + "*.scss", paths.src_scss + "**/*.scss"],
 		parallel(cssApp)
@@ -123,6 +127,19 @@ function app() {
 	watch([paths.src_components + "*.js"], parallel(components));
 }
 
-exports.css = cssApp;
-exports.js = jsApp;
-exports.default = app;
+/*
+ * Compile without watch
+ */
+function build() {
+	distImg();
+	lib();
+	cssApp();
+	jsApp();
+
+	return Promise.resolve();
+}
+
+// Command: gulp build
+exports.build = build;
+// Command: gulp
+exports.default = appWatch;
