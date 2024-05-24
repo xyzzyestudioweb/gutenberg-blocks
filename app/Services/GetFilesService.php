@@ -49,7 +49,7 @@ class GetFilesService {
             return new WP_REST_Response(
                 [
                     'code'    => $response->get_error_code(),
-                    'message' => $response->get_error_message(),
+                    'message' => __( "Error getting data: ", PLUGIN_TEXTDOMAIN ) . $response->get_error_message(),
                 ],
                 500 );
         }

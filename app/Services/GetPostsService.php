@@ -56,8 +56,8 @@ class GetPostsService {
         if ( empty( $response['posts'] ) ) {
             return new WP_REST_Response(
                 [
-                    'code'    => $response->get_error_code(),
-                    'message' => __( 'No items were found. ', PLUGIN_TEXTDOMAIN ) . $response->get_error_message(),
+                    'code'    => 'no_items_found',
+                    'message' => __( 'No items were found. ', PLUGIN_TEXTDOMAIN ),
                 ],
                 404 );
         }
