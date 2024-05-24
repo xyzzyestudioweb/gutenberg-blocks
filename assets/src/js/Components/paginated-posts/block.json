@@ -23,6 +23,10 @@
 		"textForShowGalleryButton": {
 			"type": "string",
 			"default": "View gallery"
+		},
+		"showDate": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"textdomain": "gutenberg-blocks",

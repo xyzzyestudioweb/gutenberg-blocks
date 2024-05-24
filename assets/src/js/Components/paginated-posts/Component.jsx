@@ -6,7 +6,7 @@ import GalleryModal from "../modal/GalleryModal";
 import PostCard from "./PostCard";
 
 export default function Component({ attributes, is_edit_mode, blockProps }) {
-  const { cpt, perPage, className, textForShowGalleryButton } = attributes;
+  const { cpt, perPage, className, textForShowGalleryButton, showDate } = attributes;
 
   const [response, setResponse] = useState(null);
   const [pageNum, setPageNum] = useState(1);
@@ -105,7 +105,7 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
     }
 
     return response?.posts.map((post, index) => (
-      <PostCard key={index} post={post} hasGalleryStyle={hasGalleryStyle} handlePostClick={handlePostClick} />
+      <PostCard key={index} post={post} hasGalleryStyle={hasGalleryStyle} showDate={showDate} handlePostClick={handlePostClick} />
     ))
   }
 
@@ -132,11 +132,10 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
     )
   }
 
-
   return (
     <>
       {renderButton()}
-      <ul className="wp-block-latest-posts__list is-grid columns-3 has-dates alignwide wp-block-latest-posts" ref={scrollToRef}>
+      <ul className="wp-block-latest-posts__list is-grid columns-3 alignwide wp-block-latest-posts" ref={scrollToRef}>
         {renderData()}
       </ul>
       {renderPagination()}

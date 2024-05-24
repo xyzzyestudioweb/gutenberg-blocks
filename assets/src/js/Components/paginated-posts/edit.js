@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl, SelectControl } from '@wordpress/components';
+import { PanelBody, TextControl, SelectControl, ToggleControl } from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -33,7 +33,7 @@ import Component from './Component';
  */
 export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
-	const { cpt, perPage, textForShowGalleryButton } = attributes;
+	const { cpt, perPage, textForShowGalleryButton, showDate } = attributes;
 	const hasGalleryStyle = blockProps.className?.includes('is-style-custom-cpt');
 
 	const handleCptChange = (cpt) => {
@@ -46,6 +46,10 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const handleTextChange = (text) => {
 		setAttributes({ textForShowGalleryButton: text });
+	}
+
+	const handleShowDateChange = (showDate) => {
+		setAttributes({ showDate: showDate });
 	}
 
 	return (
@@ -68,12 +72,16 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={handlePerPageChange}
 						type="number"
 					/>
-
 					{hasGalleryStyle && (<TextControl
 						label={__('Text for "Show gallery" button', 'gutenberg-blocks')}
 						value={textForShowGalleryButton}
 						onChange={handleTextChange}
 						type="text"
+					/>)}
+					{!hasGalleryStyle && (<ToggleControl
+						label={__('Show date', 'elmusel')}
+						checked={showDate}
+						onChange={handleShowDateChange}
 					/>)}
 				</PanelBody>
 			</InspectorControls>

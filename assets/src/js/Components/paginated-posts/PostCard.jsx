@@ -2,7 +2,7 @@ import { getThumbnailFromVideo } from "../../Services/CommonBlockFunctions";
 import VideoCover from "../common-frontend/VideoCover";
 import { __ } from "@wordpress/i18n";
 
-export default function PostCard({ index, post, hasGalleryStyle, handlePostClick }) {
+export default function PostCard({ index, post, hasGalleryStyle, showDate, handlePostClick }) {
   // if block has the gallery block style, then the post.url will be # and will add the class galleryModal to the li which will create and open the modal on click.
   const postURL = hasGalleryStyle ? null : post.url;
 
@@ -37,9 +37,9 @@ export default function PostCard({ index, post, hasGalleryStyle, handlePostClick
       <a className="wp-block-latest-posts__post-title" href={postURL} target="_self" rel="noopener noreferrer" >
         {post.title}
       </a>
-      <time dateTime={post.date} className="wp-block-latest-posts__post-date">
+      {(showDate === "true") && (<time dateTime={post.date} className="wp-block-latest-posts__post-date">
         {post.date}
-      </time>
+      </time>)}
       <div className="wp-block-latest-posts__post-excerpt">
         {post.excerpt}
       </div>
