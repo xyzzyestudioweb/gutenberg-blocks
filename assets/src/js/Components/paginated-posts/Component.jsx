@@ -105,7 +105,7 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
     }
 
     return response?.posts.map((post, index) => (
-      <PostCard key={index} post={post} hasGalleryStyle={hasGalleryStyle} showDate={showDate} handlePostClick={handlePostClick} />
+      <PostCard key={index} post={post} isEditMode={is_edit_mode} hasGalleryStyle={hasGalleryStyle} showDate={showDate} handlePostClick={handlePostClick} />
     ))
   }
 

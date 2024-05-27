@@ -2,9 +2,9 @@ import { getThumbnailFromVideo } from "../../Services/CommonBlockFunctions";
 import VideoCover from "../common-frontend/VideoCover";
 import { __ } from "@wordpress/i18n";
 
-export default function PostCard({ post, hasGalleryStyle, showDate, handlePostClick }) {
-  // if block has the gallery block style, then the post.url will be # and will add the class galleryModal to the li which will create and open the modal on click.
-  const postURL = hasGalleryStyle ? null : post.url;
+export default function PostCard({ post, isEditMode, hasGalleryStyle, showDate, handlePostClick }) {
+  // if block has the gallery block style, or we are on Editor then the post.url will be null.
+  const postURL = hasGalleryStyle || isEditMode ? null : post.url;
 
   const media = (post) => {
     if (post.videoEmbed) {

@@ -28,7 +28,6 @@ export default function Component({ attributes, setAttributes, is_edit_mode }) {
       const params = new URLSearchParams();
       params.append('post_id', page);
       const filesResponse = await fetch(`${apiUrl}?${params.toString()}`);
-      
       if (!filesResponse?.ok) {
         throw new Error("Failed to fetch attached documents");
       }
@@ -68,29 +67,32 @@ export default function Component({ attributes, setAttributes, is_edit_mode }) {
       );
     }
 
-    return response?.map((file, index) => (
-      <div key={index} className="single-file-container">
-        <div className="single-file-container__heading">
-          <img loading="lazy" src={file.icon} alt="file-icon" />
-          <div className="file-text-container">
-            <p>{file.title}</p>
+    return response?.map((file, index) => {
+      const fileURL = is_edit_mode ? null : file.url;
+      return (
+        <div key={index} className="single-file-container">
+          <div className="single-file-container__heading">
+            <img loading="lazy" src={file.icon} alt="file-icon" />
+            <div className="file-text-container">
+              <p>{file.title}</p>
+            </div>
+          </div>
+          <div className="file__link-container wp-block-buttons">
+            <div className="wp-block-button is-style-fill wp-block-button__clear-style--text-icon">
+              <a href={fileURL} download target="_blank" rel="noopener noreferrer" className="wp-block-button__link has-blue-color has-transparent-background-color has-text-color has-background has-link-color has-text-align-left wp-element-button">
+                <span>{__("Download", "gutenberg-blocks")}</span>
+                <img style={{ width: "43px" }} src="/wp-content/plugins/gutenberg-blocks/assets/build/img/icons/download.svg"
+                />
+                <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="43" height="43" rx="21.5" fill="#FFE000" />
+                  <path d="M21.5 27L16 22.2857M21.5 27L27 22.2857M21.5 27L21.5 16" stroke="#005DA1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
-        <div className="file__link-container wp-block-buttons">
-          <div className="wp-block-button is-style-fill wp-block-button__clear-style--text-icon">
-            <a href={file.url} download target="_blank" rel="noopener noreferrer" className="wp-block-button__link has-blue-color has-transparent-background-color has-text-color has-background has-link-color has-text-align-left wp-element-button">
-              <span>{__("Download", "gutenberg-blocks")}</span>
-              <img style={{ width: "43px" }} src="/wp-content/plugins/gutenberg-blocks/assets/build/img/icons/download.svg"
-              />
-              <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="43" height="43" rx="21.5" fill="#FFE000" />
-                <path d="M21.5 27L16 22.2857M21.5 27L27 22.2857M21.5 27L21.5 16" stroke="#005DA1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    ))
+      )
+    })
   }
 
   return (
