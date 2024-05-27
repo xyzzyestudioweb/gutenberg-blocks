@@ -27,6 +27,10 @@
 		"showDate": {
 			"type": "boolean",
 			"default": true
+		},
+		"isPaginated": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"textdomain": "gutenberg-blocks",

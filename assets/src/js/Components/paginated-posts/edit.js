@@ -33,7 +33,7 @@ import Component from './Component';
  */
 export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
-	const { cpt, perPage, textForShowGalleryButton, showDate } = attributes;
+	const { cpt, perPage, textForShowGalleryButton, showDate, isPaginated } = attributes;
 	const hasGalleryStyle = blockProps.className?.includes('is-style-custom-cpt');
 
 	const handleCptChange = (cpt) => {
@@ -50,6 +50,10 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const handleShowDateChange = (newValue) => {
 		setAttributes({ showDate: newValue });
+	}
+
+	const handleIsPaginatedChange = (newValue) => {
+		setAttributes({ isPaginated: newValue });
 	}
 
 	return (
@@ -81,9 +85,15 @@ export default function Edit({ attributes, setAttributes }) {
 					{!hasGalleryStyle && (<ToggleControl
 						label={__('Show date', 'elmusel')}
 						help={showDate ? 'It shows the post date' : 'It doesn\'t shows the post date'}
-						checked={showDate}				
+						checked={showDate}
 						onChange={handleShowDateChange}
 					/>)}
+					<ToggleControl
+						label={__('Want pagination?', 'elmusel')}
+						help={isPaginated ? 'It shows the pagination when needed' : 'It doesn\'t shows the pagination'}
+						checked={isPaginated}
+						onChange={handleIsPaginatedChange}
+					/>
 				</PanelBody>
 			</InspectorControls>
 

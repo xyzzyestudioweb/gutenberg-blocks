@@ -6,7 +6,7 @@ import GalleryModal from "../modal/GalleryModal";
 import PostCard from "./PostCard";
 
 export default function Component({ attributes, is_edit_mode, blockProps }) {
-  const { cpt, perPage, className, textForShowGalleryButton, showDate } = attributes;
+  const { cpt, perPage, className, textForShowGalleryButton, showDate, isPaginated } = attributes;
 
   const [response, setResponse] = useState(null);
   const [pageNum, setPageNum] = useState(1);
@@ -110,7 +110,8 @@ export default function Component({ attributes, is_edit_mode, blockProps }) {
   }
 
   const renderPagination = () => {
-    if (isLoading || !response || response.total_posts <= perPage) {
+    const showPagination = (isPaginated === true || isPaginated === "true") ? true : false;
+    if (isLoading || !response || !showPagination || response.total_posts <= perPage) {
       return;
     }
     return (
