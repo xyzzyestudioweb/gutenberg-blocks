@@ -48,8 +48,8 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ textForShowGalleryButton: text });
 	}
 
-	const handleShowDateChange = (showDate) => {
-		setAttributes({ showDate: showDate });
+	const handleShowDateChange = (newValue) => {
+		setAttributes({ showDate: newValue });
 	}
 
 	return (
@@ -80,7 +80,8 @@ export default function Edit({ attributes, setAttributes }) {
 					/>)}
 					{!hasGalleryStyle && (<ToggleControl
 						label={__('Show date', 'elmusel')}
-						checked={showDate}
+						help={showDate ? 'It shows the post date' : 'It doesn\'t shows the post date'}
+						checked={showDate}				
 						onChange={handleShowDateChange}
 					/>)}
 				</PanelBody>
