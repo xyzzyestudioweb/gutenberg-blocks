@@ -191,12 +191,7 @@ body .is-layout-constrained .wp-block-latest-posts {
   }
 
   @include respond-at($x-large) {
-    margin-left: rem(12) !important;
-    margin-right: rem(12) !important;
-  }
-
-  @include respond-at($huge) {
-    margin-left: rem(0) !important;
-    margin-right: rem(0) !important;
+    margin-left: rem(24) !important;
+    margin-right: rem(24) !important;
   }
 }

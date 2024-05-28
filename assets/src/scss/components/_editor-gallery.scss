@@ -9,6 +9,7 @@
 
         @include respond-at($large) {
           width: calc(33.33333% - 20px);
+          min-width: unset;
         }
       }
     }
