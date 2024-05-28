@@ -54,7 +54,7 @@ class PostsRepository {
                     'id'      => $id,
                     'title'   => get_the_title(),
                     'url'     => get_the_permalink(),
-                    'date'    => get_the_modified_date( 'Y-m-d H:i:s' ),
+                    'date'    => get_the_modified_date(),
                     'excerpt' => get_the_excerpt() ?: '',
                     'image'   => $image,
                     'videoEmbed' => $video_embed,
