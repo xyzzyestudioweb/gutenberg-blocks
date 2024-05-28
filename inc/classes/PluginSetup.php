@@ -11,6 +11,6 @@ class PluginSetup {
 
     public function blocks_init() 
     {
-        register_block_type( dirname( dirname( __FILE__ ) ). '/build/test-block' );
+        register_block_type( __DIR__ . '/../../build/test-block' );
     }
 }

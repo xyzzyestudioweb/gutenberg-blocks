@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "create-block/test-block",
+	"name": "gutenberg-blocks/test-block",
 	"version": "0.1.0",
 	"title": "Test Block",
 	"category": "widgets",
@@ -10,7 +10,13 @@
 	"supports": {
 		"html": false
 	},
-	"textdomain": "test-block",
+	"attributes": {
+		"testInput": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "gutenberg-blocks",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css"
