@@ -20,6 +20,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+import BaseComponent from "../app/BaseComponent"
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -29,10 +30,13 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit( { attributes, setAttributes } ) {
+
+	
+
 	return (
 		<p { ...useBlockProps() }>
-			{ __( 'Test Block – hello from the editor!', 'test-block' ) } 
+			<BaseComponent input="testing"/>
 		</p>
 	);
 }
