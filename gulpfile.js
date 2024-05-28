@@ -48,7 +48,10 @@ function cssApp() {
 			.pipe(concat("front-only.min.css")),
 		src([paths.src_scss + "components/block-latest-posts.scss"])
 			.pipe(sass().on("error", sass.logError))
-			.pipe(concat("block-latest-posts.min.css"))
+			.pipe(concat("block-latest-posts.min.css")),
+		src([paths.src_scss + "components/custom-blocks.scss"])
+			.pipe(sass().on("error", sass.logError))
+			.pipe(concat("custom-blocks.min.css"))
 	)
 		.pipe(
 			autoprefixer({

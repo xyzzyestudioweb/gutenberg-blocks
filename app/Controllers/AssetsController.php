@@ -4,7 +4,7 @@ namespace GutenbergBlocks\Controllers;
 \defined( 'ABSPATH' ) || die;
 
 class AssetsController {
-    
+
     public function __construct() {
         add_action( 'plugins_loaded', [$this, 'setup'] );
         add_action( 'wp_enqueue_scripts', [$this, 'add_scripts'] );
@@ -36,7 +36,7 @@ class AssetsController {
     }
 
     /**
-     * Enqueue assets for patterns and native blocks in Editor and frontend.
+     * Enqueue assets for patterns and native and custom blocks in Editor and frontend.
      */
     public function enqueue_block_assets() {
         /* Enqueue in front (all pages) and back editor. */
@@ -59,6 +59,11 @@ class AssetsController {
         has_block( 'core/latest-posts' ) && !wp_script_is( 'block-latest-posts', 'enqueued' ) && wp_enqueue_script( 'block-latest-posts' );
 
         !wp_script_is( 'block-counters', 'enqueued' ) && has_block( 'core/columns' ) && wp_enqueue_script( 'block-counters', PLUGIN_URL . 'assets/build/js/counters.min.js', [], wp_get_theme()->get( 'Version' ) );
+
+        /* Enqueue in both front and back for all custom blocks. */
+        if ( !wp_style_is( 'custom-blocks', 'enqueued' ) && ( has_block( 'gutenberg-blocks/documents' ) || has_block( 'gutenberg-blocks/hero-slider' ) || has_block( 'gutenberg-blocks/paginated-posts' ) || has_block( 'gutenberg-blocks/video-facade' ) ) ) {
+            wp_enqueue_style( 'custom-blocks', PLUGIN_URL . 'assets/build/css/custom-blocks.min.css', [], wp_get_theme()->get( 'Version' ) );
+        }
     }
 
     /**
