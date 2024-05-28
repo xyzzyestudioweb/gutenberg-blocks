@@ -22,7 +22,7 @@
 		},
 		"textForShowGalleryButton": {
 			"type": "string",
-			"default": "View gallery"
+			"default": ""
 		},
 		"showDate": {
 			"type": "boolean",

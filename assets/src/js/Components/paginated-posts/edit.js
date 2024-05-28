@@ -83,13 +83,13 @@ export default function Edit({ attributes, setAttributes }) {
 						type="text"
 					/>)}
 					{!hasGalleryStyle && (<ToggleControl
-						label={__('Show date', 'elmusel')}
+						label={__('Show date', 'gutenberg-blocks')}
 						help={showDate ? 'It shows the post date' : 'It doesn\'t shows the post date'}
 						checked={showDate}
 						onChange={handleShowDateChange}
 					/>)}
 					<ToggleControl
-						label={__('Want pagination?', 'elmusel')}
+						label={__('Want pagination?', 'gutenberg-blocks')}
 						help={isPaginated ? 'It shows the pagination when needed' : 'It doesn\'t shows the pagination'}
 						checked={isPaginated}
 						onChange={handleIsPaginatedChange}
