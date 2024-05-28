@@ -1,9 +1,9 @@
 {
-  "name": "adrianahdez/gutenberg-blocks",
-  "description": "Gutenberg Blocks Plugin",
-  "autoload": {
-    "psr-4": {
-      "GutenbergBlocks\\": "app/"
+    "name": "adrianahdez/gutenberg-blocks",
+    "description": "Gutenberg Blocks Plugin",
+    "autoload": {
+      "psr-4": {
+        "Inc\\": "inc/classes/"
+      }
     }
-  }
 }

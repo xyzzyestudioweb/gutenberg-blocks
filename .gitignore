@@ -34,4 +34,4 @@ vendor/
 # dotenv environment variables file
 .env
 
-assets/build/
+build/

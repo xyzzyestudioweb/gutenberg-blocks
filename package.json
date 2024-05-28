@@ -1,42 +1,22 @@
 {
 	"name": "gutenberg-blocks",
 	"version": "0.1.0",
-	"description": "Set of Gutenberg blocks",
-	"author": "Adriana Hernández Regueiro",
-	"license": "GPL-3.0-or-later",
-	"main": "assets/src/js/main.js",
+	"description": "Plugin for develop custom Gutenberg blocks",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
 	"scripts": {
-		"build": "wp-scripts build --webpack-src-dir=./assets/src/js/Components --output-path=./assets/build/js/Components",
-		"format": "wp-scripts format --webpack-src-dir=./assets/src/js/Components --output-path=./assets/build/js/Components",
-		"lint:css": "wp-scripts lint-style --webpack-src-dir=./assets/src/js/Components --output-path=./assets/build/js/Components",
-		"lint:js": "wp-scripts lint-js --webpack-src-dir=./assets/src/js/Components --output-path=./assets/build/js/Components",
-		"start": "wp-scripts start --webpack-src-dir=./assets/src/js/Components --output-path=./assets/build/js/Components",
-		"packages-update": "wp-scripts packages-update"
-	},
-	"dependencies": {
-		"react-lite-youtube-embed": "^2.3.52"
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start",
+		"pot:create": "wp-pot --dest-file='languages/gutenberg-blocks.pot'"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.17.10",
-		"@babel/preset-env": "^7.17.10",
-		"@wordpress/scripts": "^27.5.0",
-		"gulp": "4.0.2",
-		"gulp-autoprefixer": "6.1.0",
-		"gulp-babel": "^8.0.0",
-		"gulp-clean-css": "^4.3.0",
-		"gulp-cli": "^2.3.0",
-		"gulp-concat": "^2.6.1",
-		"gulp-group-css-media-queries": "^1.2.2",
-		"gulp-rename": "^2.0.0",
-		"gulp-sass": "^5.1.0",
-		"gulp-sourcemaps": "^2.6.5",
-		"gulp-strip-css-comments": "^2.0.0",
-		"gulp-uglify": "^3.0.2",
-		"gulp-watch": "^4.0.1",
-		"gulp-wp-pot": "^2.5.0",
-		"sass": "^1.51.0",
-		"streamqueue": "^1.1.2",
-		"vinyl-sourcemaps-apply": "~0.2.1",
+		"@wordpress/scripts": "^26.15.0",
 		"wp-pot-cli": "^1.5.0"
 	}
 }

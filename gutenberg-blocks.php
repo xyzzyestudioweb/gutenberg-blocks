@@ -13,27 +13,10 @@
  * @package           create-block
  */
 
-use GutenbergBlocks\App;
-
 defined( 'ABSPATH' ) || die;
 
-/**
- * Detects if gutenberg-blocks is installed as plugin or theme
- *
- * @return bool
- */
-if ( ! function_exists( 'is_theme' ) ) {
-	function is_theme(): bool {
-			return strpos( dirname( __FILE__, 2 ), 'themes' );
-	}
-}
+require_once( __DIR__ . "/vendor/autoload.php" );
 
-// Composer
-require_once __DIR__ . '/vendor/autoload.php';
+use Inc\PluginSetup;
 
-// App
-require_once __DIR__ . '/constants.php';
-require_once PLUGIN_PATH . '/app/App.php';
-
-App::instance()->run();
-
+new PluginSetup();
