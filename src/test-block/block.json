@@ -12,8 +12,18 @@
 	},
 	"attributes": {
 		"testInput": {
+			"key": "testInput",
 			"type": "string",
-			"default": ""
+			"default": "",
+			"label": "Testing label",
+			"component": "input"
+		},
+		"testToggle": {
+			"key": "testToggle",
+			"type": "boolean",
+			"default": false,
+			"label": "Testing Toggle",
+			"component": "toggle"
 		}
 	},
 	"textdomain": "gutenberg-blocks",

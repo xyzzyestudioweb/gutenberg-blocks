@@ -11,7 +11,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from "@wordpress/components"
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -20,7 +21,8 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-import BaseComponent from "../app/BaseComponent"
+import blockData from './block.json';
+import { BaseComponent } from "../app/BaseComponent"
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -31,12 +33,23 @@ import BaseComponent from "../app/BaseComponent"
  * @return {WPElement} Element to render.
  */
 export default function Edit( { attributes, setAttributes } ) {
-
 	
+	const blockProps = useBlockProps();
+	const { testInput, testToggle } = attributes;
+	const attrData = blockData.attributes
 
 	return (
-		<p { ...useBlockProps() }>
-			<BaseComponent input="testing"/>
-		</p>
+		<React.Fragment>
+			<InspectorControls>
+				<PanelBody title = { __( "Block options", "gutenberg-blocks" ) } >
+					<BaseComponent attr={ testInput } data={ attrData.testInput } set={ setAttributes } />
+					<BaseComponent attr={ testToggle } data={ attrData.testToggle } set={ setAttributes } />
+				</PanelBody>
+			</InspectorControls>
+
+			<div { ...blockProps }>
+				<h2>{testInput}</h2>
+			</div>
+		</React.Fragment>
 	);
 }
