@@ -12,18 +12,33 @@
 	},
 	"attributes": {
 		"testInput": {
-			"key": "testInput",
 			"type": "string",
 			"default": "",
-			"label": "Testing label",
-			"component": "input"
+			"componentType": "input",
+			"key": "testInput",
+			"attributes": {
+				"label": "Testing label",
+				"type": "number"
+			}
 		},
 		"testToggle": {
-			"key": "testToggle",
 			"type": "boolean",
 			"default": false,
-			"label": "Testing Toggle",
-			"component": "toggle"
+			"componentType": "toggle",
+			"key": "testToggle",
+			"attributes": {
+				"label": "Testing toggle"
+			}
+		},
+		"testRange": {
+			"type": "number",
+			"default": 1,
+			"componentType": "range",
+			"key": "testRange",
+			"attributes": {
+				"min": 1,
+				"max": 300
+			}
 		}
 	},
 	"textdomain": "gutenberg-blocks",

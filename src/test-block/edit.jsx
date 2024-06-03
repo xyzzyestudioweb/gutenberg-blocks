@@ -35,7 +35,7 @@ import { BaseComponent } from "../app/BaseComponent"
 export default function Edit( { attributes, setAttributes } ) {
 	
 	const blockProps = useBlockProps();
-	const { testInput, testToggle } = attributes;
+	const { testInput, testToggle, testRange } = attributes;
 	const attrData = blockData.attributes
 
 	return (
@@ -44,6 +44,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title = { __( "Block options", "gutenberg-blocks" ) } >
 					<BaseComponent attr={ testInput } data={ attrData.testInput } set={ setAttributes } />
 					<BaseComponent attr={ testToggle } data={ attrData.testToggle } set={ setAttributes } />
+					<BaseComponent attr={ testRange } data={ attrData.testRange } set={ setAttributes } />
 				</PanelBody>
 			</InspectorControls>
 

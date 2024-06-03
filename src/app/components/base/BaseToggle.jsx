@@ -7,11 +7,14 @@ export function BaseToggle ( { attr, data, set } ) {
 		set( { [data.key]: val } );
 	};
 
+    let attributes = data.attributes
+    let label = attributes.label ? attributes.label : "Toggle"
+
     return (
         <ToggleControl
-            label = { __( data.label, "gutenberg-blocks" ) }
+            label = { __( label, "gutenberg-blocks" ) }
             checked = { attr }
-            help = { attr ? __( "Has " + data.label, "gutenberg-blocks" ) : __( "Not " + data.label, "gutenberg-blocks" ) }
+            help = { attr ? __( "Has " + label, "gutenberg-blocks" ) : __( "Not " + label, "gutenberg-blocks" ) }
             onChange = { handleOnChangeValue }
         />
     )
